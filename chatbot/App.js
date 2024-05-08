@@ -10,10 +10,6 @@ const App = () => {
 
     setMessages([...messages, { text: inputText, sender: 'user' }]);
     setInputText('');
-    
-    // Here you can implement the logic to send the inputText to the chatbot backend 
-    // and get the response, then update the messages state with the bot's response.
-    // For simplicity, I'm not implementing the actual chatbot logic here.
   };
 
   return (
