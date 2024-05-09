@@ -5,10 +5,16 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
 
-  const handleSendMessage = () => {
+  const handleGPTFetch = () => {
     if (inputText.trim() === '') return;
 
     setMessages([...messages, { text: inputText, sender: 'user' }]);
+
+    fetch("https://httpbin.org/anything")
+    .then(response => response.json())
+    .then(data => {setMessages([...messages, { text: data.headers.Origin, sender: 'bot' }])})
+    .catch(error => console.log(error));
+
     setInputText('');
   };
 
@@ -30,7 +36,7 @@ const App = () => {
           value={inputText}
           onChangeText={setInputText}
         />
-        <Button title="Send" onPress={handleSendMessage} />
+        <Button title="Send" onPress={handleGPTFetch} />
       </View>
     </View>
   );
