@@ -8,11 +8,13 @@ const App = () => {
   const handleGPTFetch = () => {
     if (inputText.trim() === '') return;
 
-    setMessages([...messages, { text: inputText, sender: 'user' }]);
+    setMessages(prevMessages => [...prevMessages, { text: inputText, sender: 'user' }]);
 
     fetch("https://httpbin.org/anything")
     .then(response => response.json())
-    .then(data => {setMessages([...messages, { text: data.headers.Origin, sender: 'bot' }])})
+    .then(data => {
+      setMessages(prevMessages => [...prevMessages, { text: data.headers.Origin, sender: 'bot' }])
+    })
     .catch(error => console.log(error));
 
     setInputText('');
