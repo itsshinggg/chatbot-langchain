@@ -1,23 +1,36 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, ScrollView, Text, StyleSheet } from 'react-native';
+import axios from 'axios';
 
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
 
-  const handleGPTFetch = () => {
-    if (inputText.trim() === '') return;
+  const handleGPTFetch = async () => {
+    try{
+      if (inputText.trim() === '') return;
 
-    setMessages(prevMessages => [...prevMessages, { text: inputText, sender: 'user' }]);
+      setMessages(prevMessages => [...prevMessages, { text: inputText, sender: 'user' }]);
 
-    fetch("https://httpbin.org/anything")
-    .then(response => response.json())
-    .then(data => {
-      setMessages(prevMessages => [...prevMessages, { text: data.headers.Origin, sender: 'bot' }])
-    })
-    .catch(error => console.log(error));
+      const output = await fetch("https://httpbin.org/anything").then(response => response.json()).then(data => data.headers.Origin)
+      setMessages(prevMessages => [...prevMessages, { text: output, sender: 'bot' }])
+      
+      // const response = await axios.post("https://api.openai.com/v1/chat/completions",{
+      //   prompt:  inputText,
+      // },{
+      //   headers:{
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer sk-proj-7wwbkKM2g5Mf68IoqMqRT3BlbkFJl6F2RdbVCuRyUx774Kny`,
+      //   }
+      // }
+      // )
+      // console.log(response.data.choices[0].text.trim())
 
-    setInputText('');
+      setInputText('');
+    }
+    catch{
+      console.log('there is an error')
+    }
   };
 
   return (
