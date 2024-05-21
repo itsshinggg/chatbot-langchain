@@ -3,7 +3,7 @@ import { View, TextInput, Button, ScrollView, Text, StyleSheet } from 'react-nat
 
 import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_OPENAI_API, dangerouslyAllowBrowser: true });
+// const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_OPENAI_API, dangerouslyAllowBrowser: true });
 
 const App = () => {
   const [messages, setMessages] = useState([]);
