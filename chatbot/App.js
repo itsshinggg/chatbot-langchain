@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, ScrollView, Text, StyleSheet } from 'react-native';
-import axios from 'axios';
+
+import OpenAI from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_OPENAI_API, dangerouslyAllowBrowser: true });
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -10,22 +13,20 @@ const App = () => {
     try{
       if (inputText.trim() === '') return;
 
+      // store user inputs and display it
       setMessages(prevMessages => [...prevMessages, { text: inputText, sender: 'user' }]);
 
-      const output = await fetch("https://httpbin.org/anything").then(response => response.json()).then(data => data.headers.Origin)
-      setMessages(prevMessages => [...prevMessages, { text: output, sender: 'bot' }])
-      
-      // const response = await axios.post("https://api.openai.com/v1/chat/completions",{
-      //   prompt:  inputText,
-      // },{
-      //   headers:{
-      //     'Content-Type': 'application/json',
-      //     'Authorization': `Bearer sk-proj-7wwbkKM2g5Mf68IoqMqRT3BlbkFJl6F2RdbVCuRyUx774Kny`,
-      //   }
-      // }
-      // )
-      // console.log(response.data.choices[0].text.trim())
+      // chatgpt response function
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: inputText}],
+        model: "gpt-3.5-turbo",
+      });
+      const gptResponse = completion.choices[0].message.content
 
+      // store gpt respnse and display it
+      setMessages(prevMessages => [...prevMessages, { text: gptResponse, sender: 'bot' }]);
+
+      // clear the user input box
       setInputText('');
     }
     catch{
