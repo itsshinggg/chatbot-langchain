@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, ScrollView, Text, StyleSheet } from 'react-native';
 
-import OpenAI from "openai";
-
-// const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_OPENAI_API, dangerouslyAllowBrowser: true });
-
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
