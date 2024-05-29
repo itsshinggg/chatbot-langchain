@@ -16,20 +16,16 @@ const App = () => {
       // store user inputs and display it
       setMessages(prevMessages => [...prevMessages, { text: inputText, sender: 'user' }]);
 
-      // chatgpt response function
-      // const completion = await openai.chat.completions.create({
-      //   messages: [{ role: "system", content: inputText}],
-      //   model: "gpt-3.5-turbo",
-      // });
-      // const gptResponse = completion.choices[0].message.content
+      const response = await fetch('URL', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: inputText }),
+      }).then(res => res.json()).then(data => data.response);     
+      
+      setMessages(prevMessages => [...prevMessages, { text: response, sender: 'bot' }]);
 
-      // const response = await fetch("langchain api ").then(res => res.json()).then(data => data.message)
-      // console.log(response)
-
-      // store gpt respnse and display it
-      setMessages(prevMessages => [...prevMessages, { text: gptResponse, sender: 'bot' }]);
-
-      // clear the user input box
       setInputText('');
     }
     catch{
