@@ -13,6 +13,7 @@ const App = () => {
 
       // Store user inputs and display it
       setMessages(prevMessages => [...prevMessages, { text: inputText, sender: 'user' }]);
+      setInputText('');
       setLoading(true); // Show loading indicator
 
       // Select the endpoint based on the current mode
@@ -29,13 +30,12 @@ const App = () => {
         return data.response
       });
 
-      // Simulate delay for demonstration (remove this in actual implementation)
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
+      setInputText('');
+      
       // Store and display bot response
       setMessages(prevMessages => [...prevMessages, { text: res, sender: 'bot', mode }]);
       setLoading(false); // Hide loading indicator
-      setInputText('');
+      
     } catch {
       console.log('There is an error');
     }
