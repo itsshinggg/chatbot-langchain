@@ -32,7 +32,7 @@
 
 - If you want to see the app on your mobile phone
 
-  - Have Expo app installed on your phone
+  - Have [Expo Go](https://apps.apple.com/us/app/expo-go/id982107779) app installed on your phone
   - Scan the QR code displayed in the terminal with your mobile camera.
 
   > **Note:** If it takes too long to run the app on your phone, try `npx expo start --tunnel` and scan the QR code
